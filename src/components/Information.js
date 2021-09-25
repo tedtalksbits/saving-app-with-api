@@ -35,7 +35,7 @@ const SlantCard = styled.div`
 `
 const InfoCard = styled.div`
    background-color: rgba(255,255,255, .14);
-   backdrop-filter: blur(9px);
+   backdrop-filter: blur(25px);
    height: 240px;
    width: 100%;
    border-radius: 1.5rem;
