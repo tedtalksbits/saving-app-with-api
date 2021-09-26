@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-
+import loadingImg from "../images/loader.svg"
 
 const InfoWrapper = styled.div`
    position: relative;
@@ -14,7 +14,7 @@ const InfoWrapper = styled.div`
       justify-content: center;
    }
 `
-const SlantCard = styled.div`
+export const SlantCard = styled.div`
    background:linear-gradient(90deg, #e100ff 0%,#4e00ff 100% );
    height: 240px;
    width: 87%;
@@ -33,7 +33,7 @@ const SlantCard = styled.div`
    }
 
 `
-const InfoCard = styled.div`
+export const InfoCard = styled.div`
    background-color: rgba(255,255,255, .14);
    backdrop-filter: blur(25px);
    height: 240px;
@@ -41,9 +41,18 @@ const InfoCard = styled.div`
    border-radius: 1.5rem;
    position: relative;
    bottom: 0;
-   border: 3px rgba(255,255,255, 0.025) solid;
+   border: 1px rgba(255,255,255, 0.25) solid;
    padding: 2rem;
-   margin: auto;
+   margin: 0 auto 3rem;
+
+
+   /* img {
+   width: 100%;
+   height: 200px;
+   object-fit:cover;
+   } */
+
+
 
    @media screen and (min-width: 666px){
       height: 290px;
@@ -74,48 +83,80 @@ const InfoBalance = styled.div`
    margin-bottom: 1.2rem;
 `
 
-const Information = () => {
+const Information = ({ match }) => {
+
+   // console.log(match.params);
+
+   const id = match.params.id;
+   // const userName = match.params.name;
 
 
-   const URL = "https://en.wikipedia.org/wiki/List_of_states_and_territories_of_the_United_States";
 
-   const fetchPortfolio = async () => {
+   useEffect(() => {
+      fetchData();
+   }, [])
+
+   const [items, setItems] = useState([])
+   const [goals, setGoals] = useState([])
+   const [isLoading, setIsLoading] = useState(true)
+
+   const URL = `https://saving-app-api.herokuapp.com/data/${id}`;
+
+
+   async function fetchData() {
       const response = await fetch(URL, {
          method: 'GET',
-
-         headers: {
-            "Access-Control-Allow-Origin": "*"
-         }
       })
-      // const result = await response.json();
+      const result = await response.json();
 
-      console.log(response);
+      // console.log(result.goals);
+      setItems(result)
+      setGoals(result.goals)
+      setIsLoading(false)
    }
 
-   fetchPortfolio();
+   // covert to currency
+   // let currency = new Intl.NumberFormat('en-US', {
+   //    style: 'currency', currency: 'USD'
+   // });
+
+
    return (
       <div className="information">
          <InfoWrapper>
             <SlantCard className="floating" />
             <InfoCard>
-               <InfoBalance className="InfoBalance">
-                  <p>My balance</p>
-                  <h1>$4000</h1>
-               </InfoBalance>
-               <InfoDetails className="InfoDetails">
-                  <div className="spend">
-                     <p>Spend</p>
-                     <span className="spent">
-                        $500
-                     </span>
+               {isLoading ?
+                  <div style={{ display: 'grid', placeItems: 'center' }}>
+                     <img src={loadingImg} alt="" />
                   </div>
-                  <div className="spend">
-                     <p>Profit</p>
-                     <span className="spent">
-                        $100
-                     </span>
-                  </div>
-               </InfoDetails>
+                  :
+                  <>
+                     <InfoBalance className="InfoBalance">
+                        <p>{items.username}</p>
+                        <h1>{
+                           new Intl.NumberFormat('en-US', {
+                              style: 'currency', currency: 'USD'
+                           }).format(goals.goals_total)
+
+                        }</h1>
+                     </InfoBalance>
+                     <InfoDetails className="InfoDetails">
+                        <div className="spend">
+                           <p>Spend</p>
+                           <span className="spent">
+                              $500
+                           </span>
+                        </div>
+                        <div className="spend">
+                           <p>Profit</p>
+                           <span className="spent">
+                              $100
+                           </span>
+                        </div>
+                     </InfoDetails>
+                  </>
+               }
 
             </InfoCard>
          </InfoWrapper>
