@@ -30,7 +30,7 @@ const Goals = () => {
    }
    return (
       <>
-         <h1>goals</h1>
+         {/* <h1>goals</h1> */}
          {
             isLoading ?
                <div style={{ display: 'grid', placeItems: 'center' }}>
@@ -47,23 +47,28 @@ const Goals = () => {
                      {items.map(item => (
                         <InfoCard
                            key={item.id}
-                           style={{ width: '300px' }}
+                           style={{}}
                         >
-                           <Link
-                              to={`/information/${item.id} ${item.username}`}
-                           >
-                              {item.username}
-                           </Link>
-                           <AvatarWrapper>
-                              <Avatar src={item.user_avatar} alt="profile" />
-                           </AvatarWrapper>
+                           <div className="card__top" style={{ display: 'flex', alignItems: "center", justifyContent: 'space-between', marginBottom: '2rem', flexDirection: "column" }}>
+
+                              <AvatarWrapper>
+                                 <Avatar src={item.user_avatar} alt="profile" />
+                              </AvatarWrapper>
+                              <Link
+                                 to={`/information/${item.id} ${item.username}`}
+                                 style={{ color: 'white', }}
+                              >
+                                 {item.username}
+                              </Link>
+                           </div>
+
                            <p>{item.goals.goals_description}</p>
                            <h2>{item.goals.goals_deadline}</h2>
                            <h2>${item.goals.goals_total}</h2>
                         </InfoCard>
 
                      ))}
-                     <SlantCard className="floating" style={{ zIndex: '-8' }} />
+                     {/* <SlantCard className="floating" style={{ zIndex: '-8' }} /> */}
 
 
                   </Wrapper>

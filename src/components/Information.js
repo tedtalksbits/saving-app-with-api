@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import loadingImg from "../images/loader.svg"
+import IconBox from './homeButton';
 
 const InfoWrapper = styled.div`
    position: relative;
@@ -23,6 +25,7 @@ export const SlantCard = styled.div`
    transform: rotate(-10deg);
    bottom: 0;
    transform-origin: top left;
+   z-index: -10;
 
    @media screen and (min-width: 559px){
       height: 500px;
@@ -36,7 +39,7 @@ export const SlantCard = styled.div`
 export const InfoCard = styled.div`
    background-color: rgba(255,255,255, .14);
    backdrop-filter: blur(25px);
-   height: 240px;
+   height: 100%;
    width: 100%;
    border-radius: 1.5rem;
    position: relative;
@@ -44,6 +47,7 @@ export const InfoCard = styled.div`
    border: 1px rgba(255,255,255, 0.25) solid;
    padding: 2rem;
    margin: 0 auto 3rem;
+   min-height: 250px;
 
 
    /* img {
@@ -56,7 +60,8 @@ export const InfoCard = styled.div`
 
    @media screen and (min-width: 666px){
       height: 290px;
-      width: 600px;
+      /* width: 600px; */
+      max-width: 600px;
    }
 `
 const InfoDetails = styled.div`
@@ -122,7 +127,10 @@ const Information = ({ match }) => {
 
 
    return (
-      <div className="information">
+      <div className="information" >
+         <Link to="/">
+            <IconBox icon={<i class='bx bxs-chevron-left'></i>} outerBg='transparent' innerBg='rgba(255,255,255, 0.25)' />
+         </Link>
          <InfoWrapper>
             <SlantCard className="floating" />
             <InfoCard>
@@ -160,6 +168,9 @@ const Information = ({ match }) => {
 
             </InfoCard>
          </InfoWrapper>
+
+         <h1>more info about {items.username}</h1>
+         <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Minus ducimus ex sequi ea quod provident exercitationem alias perspiciatis, odit asperiores?</p>
 
       </div>
    )

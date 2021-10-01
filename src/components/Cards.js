@@ -5,7 +5,7 @@ import { cardData } from '../data';
 
 const CardsGroup = styled.div`
    max-width: 1150px;
-   margin: 0 auto 2.5rem;
+   margin: 0 auto 5.5rem;
 `
 const Card = styled.div`
    height: 100px;
@@ -14,6 +14,10 @@ const Card = styled.div`
    scroll-snap-align: start;
    flex-shrink: 0;
    overflow: hidden;
+   cursor: pointer;
+   :hover{
+      border: 2px white solid;
+   }
    @media screen and (min-width: 768px){
      width: 150px;
      height: 150px;
@@ -37,6 +41,12 @@ const CardImage = styled.img`
    width: 100%;
    height: 100%;
    object-fit: contain;
+   transition: ease-in-out .4s all;
+
+   :hover{
+     width: 120%;
+     height: 120%;
+   }
 `
 const Cards = () => {
    return (
